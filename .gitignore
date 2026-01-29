@@ -1,4 +1,6 @@
-# Модели Vosk
+# JARVIS .gitignore
+
+# Модели (большие файлы)
 models/vosk-model-ru/
 models/*.bin
 models/*.mdl
@@ -13,6 +15,7 @@ __pycache__/
 dist/
 build/
 *.egg
+.pytest_cache/
 
 # Виртуальное окружение
 venv/
@@ -32,6 +35,8 @@ ENV/
 *.db
 *.sqlite3
 data/memory_db/
+data/learning/
+data/user/
 *.sql
 
 # Логи
@@ -44,6 +49,13 @@ logs/
 .DS_Store
 Thumbs.db
 
-# Конфигурация (если содержит секреты)
-# config.py
-# .env
+# Backup
+backup_before_restructure/
+
+# Конфигурация с секретами
+.env
+config/local.json
+
+# OS
+.DS_Store
+Thumbs.db

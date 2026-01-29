@@ -4,24 +4,24 @@ JARVIS - Персональный голосовой ассистент с об�
 """
 
 import asyncio
-from jarvis_gui_extended import launch_gui
+from jarvis.gui.main_window import launch_gui
 import threading
 import json
 from datetime import datetime
 from pathlib import Path
 import logging
 
-from core.speech_recognition import SpeechRecognizer
-from core.speech_synthesis import SpeechSynthesizer
-from core.nlp_processor import NLPProcessor
-from core.memory_system import MemorySystem
-from core.learning_system import LearningSystem
-from core.continuous_learning import ContinuousLearning
-from modules.task_manager import TaskManager
-from modules.calendar_manager import CalendarManager
-from modules.web_search import WebSearch
-from modules.file_manager import FileManager
-from modules.system_control import SystemControl
+from jarvis.core.speech.recognition import SpeechRecognizer
+from jarvis.core.speech.synthesis import SpeechSynthesizer
+from jarvis.core.nlp.processor import NLPProcessor
+from jarvis.core.memory.system import MemorySystem
+from jarvis.core.learning.base import LearningSystem
+from jarvis.core.learning.continuous import ContinuousLearning
+from jarvis.modules.tasks import TaskManager
+from jarvis.modules.calendar import CalendarManager
+from jarvis.modules.search import WebSearch
+from jarvis.modules.files import FileManager
+from jarvis.modules.system import SystemControl
 
 # Настройка логирования
 logging.basicConfig(
