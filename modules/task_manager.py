@@ -11,6 +11,7 @@ import uuid
 from dataclasses import dataclass, asdict
 from typing import List, Optional
 import schedule
+import time
 import threading
 
 logger = logging.getLogger(__name__)
@@ -307,7 +308,7 @@ class TaskManager:
         def run_scheduler():
             while True:
                 schedule.run_pending()
-                asyncio.sleep(60)
+                time.sleep(60)
         
         # Запуск в отдельном потоке
         scheduler_thread = threading.Thread(target=run_scheduler, daemon=True)
