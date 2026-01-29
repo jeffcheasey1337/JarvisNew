@@ -1,0 +1,32 @@
+# JARVIS Voice Assistant - Dependencies для Windows
+
+# Распознавание речи
+vosk==0.3.45
+sounddevice==0.5.1
+numpy>=1.26.0
+
+# Синтез речи (pyttsx3 - работает отлично на Windows!)
+pyttsx3==2.90
+pywin32>=305  # Для pyttsx3 на Windows
+scipy>=1.11.4
+
+# NLP и LLM
+transformers>=4.36.2
+torch>=2.1.2
+sentence-transformers>=2.7.0
+
+# Векторная база данных
+chromadb>=0.4.22
+
+# Веб-поиск и автономное обучение
+duckduckgo-search>=4.1.1
+feedparser>=6.0.11
+beautifulsoup4>=4.12.3
+requests>=2.31.0
+
+# Планировщик задач
+schedule>=1.2.0
+
+# Утилиты
+python-dateutil>=2.8.2
+colorama>=0.4.6  # Цветной вывод в консоль
