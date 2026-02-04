@@ -1,1 +1,1 @@
-"""JARVIS module"""
+"""GUI components"""

@@ -1,0 +1,15 @@
+{
+  "turbo_learning": {
+    "enabled": true,
+    "use_gpu": true,
+    "batch_size": 512,
+    "gpu_batch_size": 256,
+    "learning_interval": 30,
+    "auto_optimize": true
+  },
+  "hardware": {
+    "cpu_cores": 32,
+    "gpu_memory_gb": 16,
+    "ram_gb": 64
+  }
+}

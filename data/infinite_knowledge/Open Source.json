@@ -1,0 +1,59 @@
+{
+  "content": "Als Open Source (aus englisch open source, wörtlich offene Quelle) wird Software bezeichnet, deren Quelltext öffentlich ist und von Dritten eingesehen, geändert und genutzt werden kann. Open-Source-Software kann unter Einhaltung der Lizenzbedingungen kostenfrei genutzt und verteilt werden.\nSoftware kann sowohl von Einzelpersonen aus altruistischen Motiven zu Open-Source-Software gemacht werden als auch von Organisationen oder Unternehmen, um Entwicklungskosten zu teilen oder Marktanteile zu gewinnen. Befähigte Endbenutzer können die Software nach eigenen Bedürfnissen anpassen und eventuell als Abspaltung veröffentlichen, als auch mit „Pull Requests“ Verbesserungen beitragen.\n\n\n\nLa désignation open source /ˈoʊpən sɔɹs/, ou code source ouvert, s'applique aux logiciels (et s'étend maintenant aux œuvres de l'esprit) dont la licence respecte des critères précisément établis par l'Open Source Initiative, c'est-à-dire les possibilités de libre redistribution, d'accès au code source et de création de travaux dérivés. Mis à la disposition du grand public, ce code source est généralement le résultat d'une collaboration entre programmeurs.\nLe mouvement open source s'est développé, à partir de l'année 1998, en parallèle du mouvement du logiciel libre qui prône des valeurs philosophiques et politiques de justice, l'open source se focalisant sur des considérations techniques de développement logiciel et ne s'opposant pas à l'utilisation de systèmes intégrés combinant logiciels propriétaires et logiciels open source. Dans la pratique toutefois, la très grande majorité des logiciels open source sont également libres, l'exception la plus notable étant les logiciels pratiquant la tivoïsation.\nL’open source a déjà investi tous les grands domaines du système d’information des administrations françaises : environnements serveurs, domaines applicatifs, outils d’ingénierie, solutions de réseaux et sécurité. Les solutions open source sont désormais au même rang que les solutions propriétaires dans le paysage des logiciels du secteur public. Les décideurs effectuent d’ailleurs de plus en plus leur choix à partir d’un jugement éclairé, en comparant systématiquement solutions propriétaires et solutions libres.\n\nCon open source (in italiano sorgente aperta), in informatica, si indica un software distribuito, generalmente in via gratuita, che concede lo studio, l'utilizzo, la modifica e la redistribuzione. Questo modello si pone in contrapposizione con l'idea di software proprietario che permette le sopracitate concessioni solo secondo i termini dettati dal detentore del Copyright. Vedi anche FOSS.\n\nOpen Source Initiative（オープンソース・イニシアティブ、略称: OSI）は、オープンソースを促進することを目的とする組織である。\n1998年2月にブルース・ペレンズとエリック・レイモンドにより設立される。オープンソース・イニシアティブは「オープンソースの定義」や「ライセンスレビュー」を通してオープンソースの発展、促進の活動をしている。\nオープンソース・イニシアティブはフリーソフトウェア財団と並んでオープンソースソフトウェア分野のハッカーコミュニティにおいて基本的な権利擁護団体である。\nまた、「オープンソース・イニシアティブ」というフレーズはOW2 Consortiumにより、オープンソースのプロジェクトから市場を意識した努力を区別するのにも使われている。2004年6月に当時のObjectWeb consortiumによって開始されたESB initiativeはその例である。\n\n英語重定向：这是由英語名稱，指向中文名稱的重定向。它引導出英語標題至遵循命名常規的合適名稱，能夠協助編者寫作。除非為了更新重定向頁，一般不應該用管道連結取代重定向連結。更多信息參見Category:英語重定向。",
+  "sources": [
+    {
+      "source": "Wikipedia (de)",
+      "title": "Open Source",
+      "url": "https://de.wikipedia.org/wiki/Open_Source",
+      "content": "Als Open Source (aus englisch open source, wörtlich offene Quelle) wird Software bezeichnet, deren Quelltext öffentlich ist und von Dritten eingesehen, geändert und genutzt werden kann. Open-Source-Software kann unter Einhaltung der Lizenzbedingungen kostenfrei genutzt und verteilt werden.\nSoftware kann sowohl von Einzelpersonen aus altruistischen Motiven zu Open-Source-Software gemacht werden als auch von Organisationen oder Unternehmen, um Entwicklungskosten zu teilen oder Marktanteile zu gewinnen. Befähigte Endbenutzer können die Software nach eigenen Bedürfnissen anpassen und eventuell als Abspaltung veröffentlichen, als auch mit „Pull Requests“ Verbesserungen beitragen.\n\n",
+      "lang": "de"
+    },
+    {
+      "source": "Wikipedia (fr)",
+      "title": "Open source",
+      "url": "https://fr.wikipedia.org/wiki/Open_source",
+      "content": "La désignation open source /ˈoʊpən sɔɹs/, ou code source ouvert, s'applique aux logiciels (et s'étend maintenant aux œuvres de l'esprit) dont la licence respecte des critères précisément établis par l'Open Source Initiative, c'est-à-dire les possibilités de libre redistribution, d'accès au code source et de création de travaux dérivés. Mis à la disposition du grand public, ce code source est généralement le résultat d'une collaboration entre programmeurs.\nLe mouvement open source s'est développé, à partir de l'année 1998, en parallèle du mouvement du logiciel libre qui prône des valeurs philosophiques et politiques de justice, l'open source se focalisant sur des considérations techniques de développement logiciel et ne s'opposant pas à l'utilisation de systèmes intégrés combinant logiciels propriétaires et logiciels open source. Dans la pratique toutefois, la très grande majorité des logiciels open source sont également libres, l'exception la plus notable étant les logiciels pratiquant la tivoïsation.\nL’open source a déjà investi tous les grands domaines du système d’information des administrations françaises : environnements serveurs, domaines applicatifs, outils d’ingénierie, solutions de réseaux et sécurité. Les solutions open source sont désormais au même rang que les solutions propriétaires dans le paysage des logiciels du secteur public. Les décideurs effectuent d’ailleurs de plus en plus leur choix à partir d’un jugement éclairé, en comparant systématiquement solutions propriétaires et solutions libres.",
+      "lang": "fr"
+    },
+    {
+      "source": "Wikipedia (it)",
+      "title": "Open source",
+      "url": "https://it.wikipedia.org/wiki/Open_source",
+      "content": "Con open source (in italiano sorgente aperta), in informatica, si indica un software distribuito, generalmente in via gratuita, che concede lo studio, l'utilizzo, la modifica e la redistribuzione. Questo modello si pone in contrapposizione con l'idea di software proprietario che permette le sopracitate concessioni solo secondo i termini dettati dal detentore del Copyright. Vedi anche FOSS.",
+      "lang": "it"
+    },
+    {
+      "source": "Wikipedia (ja)",
+      "title": "Open Source Initiative",
+      "url": "https://ja.wikipedia.org/wiki/Open_Source_Initiative",
+      "content": "Open Source Initiative（オープンソース・イニシアティブ、略称: OSI）は、オープンソースを促進することを目的とする組織である。\n1998年2月にブルース・ペレンズとエリック・レイモンドにより設立される。オープンソース・イニシアティブは「オープンソースの定義」や「ライセンスレビュー」を通してオープンソースの発展、促進の活動をしている。\nオープンソース・イニシアティブはフリーソフトウェア財団と並んでオープンソースソフトウェア分野のハッカーコミュニティにおいて基本的な権利擁護団体である。\nまた、「オープンソース・イニシアティブ」というフレーズはOW2 Consortiumにより、オープンソースのプロジェクトから市場を意識した努力を区別するのにも使われている。2004年6月に当時のObjectWeb consortiumによって開始されたESB initiativeはその例である。",
+      "lang": "ja"
+    },
+    {
+      "source": "Wikipedia (zh)",
+      "title": "Open Source",
+      "url": "https://zh.wikipedia.org/wiki/Open_Source",
+      "content": "英語重定向：这是由英語名稱，指向中文名稱的重定向。它引導出英語標題至遵循命名常規的合適名稱，能夠協助編者寫作。除非為了更新重定向頁，一般不應該用管道連結取代重定向連結。更多信息參見Category:英語重定向。",
+      "lang": "zh"
+    }
+  ],
+  "entities": {
+    "people": [
+      "Open Source",
+      "Requests“ Verbesserungen",
+      "Source Initiative（オープンソース・イニシアティブ、略称:",
+      "Source Initiative,",
+      "Initiative（オープンソース・イニシアティブ、略称: OSI）は、オープンソースを促進することを目的とする組織である。",
+      "FOSS. Open",
+      "Befähigte Endbenutzer",
+      "Copyright. Vedi"
+    ],
+    "places": [],
+    "topics": [
+      "Open-Source-Software",
+      "Software",
+      "Source"
+    ]
+  },
+  "timestamp": "2026-01-31T22:57:21.053677"
+}

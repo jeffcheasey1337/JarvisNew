@@ -1,0 +1,32 @@
+{
+  "gpu_enabled": true,
+  "batch_size": 1024,
+  "num_workers": 32,
+  "pin_memory": true,
+  "prefetch_factor": 4,
+  "persistent_workers": true,
+  "gpu_optimization": {
+    "cudnn_benchmark": true,
+    "cudnn_deterministic": false,
+    "fp16": true,
+    "grad_scaler": true,
+    "compile_mode": "max-autotune"
+  },
+  "parallel": {
+    "data_parallel": true,
+    "distributed": false,
+    "world_size": 1
+  },
+  "cache": {
+    "enabled": true,
+    "max_size_gb": 8,
+    "embeddings_cache": true
+  },
+  "monitoring": {
+    "enabled": true,
+    "update_interval": 0.5,
+    "detailed_logs": true,
+    "gpu_stats": true,
+    "profiling": false
+  }
+}
