@@ -94,7 +94,7 @@ class UniversalWebCrawler:
         
         try:
             url = "https://html.duckduckgo.com/html/"
-            response = self.session.post(url, data={'q': query}, timeout=10)
+            response = self.session.post(url, data={'q': query}, timeout=5)  # СОКРАТИЛИ ТАЙМАУТ!
             
             if response.status_code == 200:
                 soup = BeautifulSoup(response.text, 'html.parser')
@@ -140,7 +140,7 @@ class UniversalWebCrawler:
                     'search': query,
                     'limit': 1,
                     'format': 'json'
-                }, timeout=8)
+                }, timeout=4)  # СОКРАТИЛИ ТАЙМАУТ!
                 
                 if response.status_code != 200:
                     continue
@@ -297,20 +297,71 @@ class FullWebLearningSystem:
         self.batch_size = 300
         self.lock = threading.Lock()
         
+        # Dashboard support
+        self.dashboard = None
+        self.current_thread_topics = {}  # thread_id -> current_topic
+        
         logger.info(f"Full Web Learning готова ({num_workers} потоков)")
     
-    def learn_topic(self, topic):
+    def enable_dashboard(self):
+        """Включение интерактивного dashboard"""
+        try:
+            from .learning_dashboard import LearningDashboard
+            self.dashboard = LearningDashboard(self)
+            self.dashboard.start()
+            logger.info("✅ Dashboard активирован!")
+        except ImportError:
+            logger.warning("❌ Не найден модуль learning_dashboard")
+        except Exception as e:
+            logger.error(f"❌ Ошибка запуска dashboard: {e}")
+    
+    def learn_topic(self, topic, thread_id=None):
         """Изучение темы из всего интернета"""
         if topic in self.studied_topics:
             return False
         
+        # Dashboard update
+        if self.dashboard and thread_id is not None:
+            self.dashboard.update_thread_status(thread_id, topic, 'searching')
+        
+        logger.info(f"🔍 Начинаю изучение: {topic}")
+        
         try:
-            results = self.crawler.search_everywhere(topic, max_results=5)
+            # БЫСТРЫЙ ПОИСК: пропускаем темы которые долго ищутся
+            results = []
+            search_success = [False]
+            
+            def do_search():
+                try:
+                    search_success[0] = True
+                    return self.crawler.search_everywhere(topic, max_results=5)
+                except Exception as e:
+                    logger.error(f"❌ Ошибка поиска {topic}: {e}")
+                    return []
+            
+            # Пытаемся найти с коротким timeout
+            import concurrent.futures
+            with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+                future = executor.submit(do_search)
+                try:
+                    results = future.result(timeout=20)  # 20 секунд максимум
+                except concurrent.futures.TimeoutError:
+                    logger.warning(f"⏱️ Таймаут поиска: {topic}")
+                    with self.lock:
+                        self.studied_topics.add(topic)
+                    return False
             
             if not results:
                 with self.lock:
                     self.studied_topics.add(topic)
+                logger.debug(f"❌ {topic}: нет результатов")
                 return False
+            
+            logger.info(f"✓ {topic}: найдено {len(results)} результатов")
+            
+            # Dashboard update - parsing
+            if self.dashboard and thread_id is not None:
+                self.dashboard.update_thread_status(thread_id, topic, 'parsing')
             
             all_content = []
             for result in results:
@@ -335,7 +386,11 @@ class FullWebLearningSystem:
                         self.knowledge_graph[topic].add(entity)
                         added += 1
             
-            # Сохраняем в память!
+            # Dashboard update - saving to memory
+            if self.dashboard and thread_id is not None:
+                self.dashboard.update_thread_status(thread_id, topic, 'saving')
+            
+            # Сохраняем в память - BATCH метод с массовым добавлением!
             memory_added = 0
             if self.memory_system:
                 logger.info(f"Попытка сохранить {topic} в память...")
@@ -343,25 +398,74 @@ class FullWebLearningSystem:
                     chunks = self._split_content(full_content, max_size=400)
                     logger.info(f"Создано {len(chunks)} чанков для {topic}")
                     
-                    for chunk in chunks[:5]:
+                    # ТУРБО ОПТИМИЗАЦИЯ: Batch добавление ВСЕХ чанков сразу!
+                    if chunks[:5]:
+                        import datetime
+                        
+                        # МЕТОД 1: Прямой доступ к ChromaDB (быстро)
                         try:
-                            self.memory_system.add_memory(
-                                content=f"{topic}: {chunk}",
-                                memory_type="knowledge",
-                                metadata={
+                            # Подготовка batch данных
+                            batch_embeddings = []
+                            batch_documents = []
+                            batch_metadatas = []
+                            batch_ids = []
+                            
+                            # Генерация эмбеддингов для ВСЕХ чанков СРАЗУ (векторизация!)
+                            texts = [f"{topic}: {chunk}" for chunk in chunks[:5]]
+                            batch_embeddings = self.memory_system.embedder.encode(texts).tolist()
+                            
+                            # Подготовка метаданных
+                            base_timestamp = datetime.datetime.now().timestamp()
+                            for idx, (chunk, embedding) in enumerate(zip(chunks[:5], batch_embeddings)):
+                                batch_documents.append(f"{topic}: {chunk}")
+                                batch_metadatas.append({
+                                    'type': 'knowledge',
+                                    'timestamp': datetime.datetime.now().isoformat(),
+                                    'importance': 0.7,
                                     'topic': topic,
                                     'source': 'web_crawler',
                                     'auto_learned': True
-                                }
+                                })
+                                batch_ids.append(f"knowledge_{base_timestamp}_{idx}")
+                            
+                            # МАССОВОЕ добавление одним вызовом!
+                            self.memory_system.collection.add(
+                                embeddings=batch_embeddings,
+                                documents=batch_documents,
+                                metadatas=batch_metadatas,
+                                ids=batch_ids
                             )
-                            memory_added += 1
-                        except Exception as e:
-                            logger.error(f"Ошибка добавления чанка в память: {e}")
-                    
-                    with self.lock:
-                        self.stats['memory_records_added'] += memory_added
-                    
-                    logger.info(f"В память добавлено {memory_added} записей для {topic}")
+                            
+                            memory_added = len(batch_documents)
+                            logger.info(f"✅ Batch сохранение: {memory_added} записей")
+                            
+                        except Exception as batch_error:
+                            logger.warning(f"Batch метод не сработал: {batch_error}")
+                            logger.info("Переключаюсь на асинхронный метод...")
+                            
+                            # МЕТОД 2: FALLBACK - асинхронный метод через asyncio (медленнее, но надёжнее)
+                            import asyncio
+                            for chunk in chunks[:5]:
+                                try:
+                                    asyncio.run(self.memory_system.store_memory(
+                                        content=f"{topic}: {chunk}",
+                                        memory_type="knowledge",
+                                        metadata={
+                                            'topic': topic,
+                                            'source': 'web_crawler',
+                                            'auto_learned': True
+                                        }
+                                    ))
+                                    memory_added += 1
+                                except Exception as e:
+                                    logger.error(f"Ошибка сохранения чанка: {e}")
+                            
+                            logger.info(f"✅ Async сохранение: {memory_added} записей")
+                        
+                        with self.lock:
+                            self.stats['memory_records_added'] += memory_added
+                        
+                        logger.info(f"В память добавлено {memory_added} записей для {topic}")
                 
                 except Exception as e:
                     logger.error(f"Ошибка памяти для {topic}: {e}", exc_info=True)
@@ -389,10 +493,19 @@ class FullWebLearningSystem:
                 self.stats['total_content'] += len(full_content)
                 self.stats['entities_discovered'] += added
             
+            # Dashboard update - completed
+            if self.dashboard and thread_id is not None:
+                self.dashboard.update_thread_status(thread_id, topic, 'completed')
+            
             return True
         
         except Exception as e:
             logger.debug(f"Ошибка {topic}: {e}")
+            
+            # Dashboard update - error
+            if self.dashboard and thread_id is not None:
+                self.dashboard.update_thread_status(thread_id, topic, 'error')
+            
             return False
     
     def process_embeddings_batch(self):
@@ -422,6 +535,9 @@ class FullWebLearningSystem:
         processed = 0
         
         try:
+            thread_id_counter = [0]  # Mutable counter for thread IDs
+            thread_id_map = {}  # Map threads to IDs
+            
             with ThreadPoolExecutor(max_workers=self.num_workers) as executor:
                 while self.topic_queue:
                     batch = []
@@ -432,7 +548,15 @@ class FullWebLearningSystem:
                     if not batch:
                         break
                     
-                    futures = {executor.submit(self.learn_topic, topic): topic for topic in batch}
+                    # Create futures with thread ID tracking
+                    futures = {}
+                    for topic in batch:
+                        # Assign thread ID
+                        thread_id = thread_id_counter[0] % self.num_workers
+                        thread_id_counter[0] += 1
+                        
+                        future = executor.submit(self.learn_topic, topic, thread_id)
+                        futures[future] = (topic, thread_id)
                     
                     for future in as_completed(futures):
                         processed += 1
@@ -451,6 +575,11 @@ class FullWebLearningSystem:
                 self.process_embeddings_batch()
             
             self._print_final_stats(total_topics)
+    
+    # Алиас для совместимости
+    def start_learning(self):
+        """Алиас для start_web_learning()"""
+        return self.start_web_learning()
     
     def _split_content(self, content, max_size=1500):
         chunks = []

@@ -150,7 +150,7 @@ class ContinuousLearning:
         """Цикл обучения"""
         if self.fullweb_learning:
             try:
-                self.fullweb_learning.start_learning()
+                self.fullweb_learning.start_web_learning()
             except Exception as e:
                 logger.error(f"Ошибка: {e}", exc_info=True)
         

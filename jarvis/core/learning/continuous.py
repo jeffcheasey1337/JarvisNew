@@ -110,7 +110,17 @@ class ContinuousLearning:
         """Цикл обучения"""
         if self.fullweb_learning:
             try:
-                self.fullweb_learning.start_web_learning()
+                # 🎯 ВКЛЮЧАЕМ ИНТЕРАКТИВНЫЙ DASHBOARD!
+                # Показывает статус всех 10 потоков в реальном времени
+                try:
+                    self.fullweb_learning.enable_dashboard()
+                    logger.info("✅ Dashboard активирован! Откройте консоль для просмотра")
+                except Exception as e:
+                    logger.warning(f"Dashboard не активирован: {e}")
+                
+                # Запускаем обучение
+                self.fullweb_learning.start_learning()
+                
             except Exception as e:
                 logger.error(f"Ошибка: {e}", exc_info=True)
         
