@@ -2,9 +2,6 @@
 JARVIS - Персональный голосовой ассистент с обучением
 Основной модуль управления
 """
-# Enhanced Learning System integration
-
-
 
 import asyncio
 from jarvis.gui.main_window import launch_gui
@@ -19,7 +16,7 @@ from jarvis.core.speech.synthesis import SpeechSynthesizer
 from jarvis.core.nlp.processor import NLPProcessor
 from jarvis.core.memory.system import MemorySystem
 from jarvis.core.learning.base import LearningSystem
-from jarvis.core.learning.integration import SmartContinuousLearning as ContinuousLearning
+from jarvis.core.learning.continuous import ContinuousLearning
 from jarvis.modules.tasks import TaskManager
 from jarvis.modules.calendar import CalendarManager
 from jarvis.modules.search import WebSearch
@@ -49,10 +46,8 @@ class JarvisAssistant:
         
         # Инициализация основных компонентов
         logger.info("Инициализация JARVIS...")
-
-        # Временно отключено
-        self.speech_recognizer = None
-        logger.warning("⚠️ Распознавание речи отключено")
+        
+        self.speech_recognizer = SpeechRecognizer(self.config)
         self.speech_synthesizer = SpeechSynthesizer(self.config)
         self.nlp_processor = NLPProcessor(self.config)
         self.memory_system = MemorySystem(self.config)
